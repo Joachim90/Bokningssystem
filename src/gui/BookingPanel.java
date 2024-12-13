@@ -281,8 +281,5 @@ public class BookingPanel extends JPanel {
 
     private void logOut(){
         this.customer = null;
-
-
-
     }
 }

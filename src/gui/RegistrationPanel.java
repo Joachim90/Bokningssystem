@@ -4,6 +4,7 @@ import data.Encryption;
 import data.UserDataManager;
 import models.Customer;
 import models.User;
+import models.UserFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -134,7 +135,7 @@ public class RegistrationPanel extends JPanel {
             return;
         }
             // Sparar till fil
-            User newUser = new Customer(id, firstName + " " + lastName, email, phonenumber, Encryption.encrypt(password));
+            User newUser = UserFactory.createUser(id, firstName + " " + lastName, email, phonenumber, Encryption.encrypt(password), "customer");
             boolean success = UserDataManager.getInstance().registerUser(newUser, "Customer");
             if (success) {
                 JOptionPane.showMessageDialog(this, "Registrering lyckades!");

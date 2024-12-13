@@ -1,9 +1,10 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Booking {
+public class Booking{
 
     private final TimeFrame timeFrame;
     private String description;
