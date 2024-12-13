@@ -14,15 +14,17 @@ import java.util.List;
 // TODO: fixa så kalendern inte ändrar storlek osv. när man väljer ett datum
 public class BookingPanel extends JPanel {
     private final AppointmentManager appointmentManager;
-    private final Customer customer;
+    private Customer customer;
     private LocalDate currentMonth;
     private JTable calendarTable;
     private DefaultTableModel calendarModel;
     private JLabel monthLabel;
     private JPanel timePanel;
     private JPanel bookingsPanel;
+    private JPanel buttonPanel;
 
-    public BookingPanel(String email, AppointmentManager appointmentManager, Customer customer) {
+
+    public BookingPanel(ViewManager parentFrame, String email, AppointmentManager appointmentManager, Customer customer) {
         this.customer = customer;
         this.appointmentManager = appointmentManager;
         currentMonth = LocalDate.now();
@@ -52,7 +54,7 @@ public class BookingPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weighty = 0.4;
-        setupBookingsPanel(backgroundLabel, gbc);
+        setupBookingsPanel(parentFrame,backgroundLabel, gbc);
 
         // Tillgängliga tider
         gbc.gridx = 1;
@@ -116,7 +118,7 @@ public class BookingPanel extends JPanel {
         updateCalendar(); // Fyller kalendern initialt
     }
 
-    private void setupBookingsPanel(JLabel parentPanel, GridBagConstraints gbc) {
+    private void setupBookingsPanel(ViewManager parentFrame, JLabel parentPanel, GridBagConstraints gbc) {
         JPanel bookingsWrapper = new JPanel(new BorderLayout());
         bookingsWrapper.setBorder(BorderFactory.createTitledBorder("Mina Bokningar"));
         bookingsWrapper.setOpaque(false);
@@ -125,13 +127,33 @@ public class BookingPanel extends JPanel {
         bookingsPanel.setOpaque(false);
         bookingsWrapper.add(bookingsPanel, BorderLayout.CENTER);
 
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        buttonPanel.setOpaque(false);
+        bookingsWrapper.add(buttonPanel, BorderLayout.SOUTH);
+
         JButton refreshButton = new JButton("Refresh");
         refreshButton.setFont(new Font("Times New Roman", Font.BOLD, 12));
         refreshButton.setPreferredSize(new Dimension(80, 25));
         refreshButton.setBackground(Color.WHITE);
         refreshButton.setFocusable(false);
         refreshButton.addActionListener(e -> refreshBookings());
-        bookingsWrapper.add(refreshButton, BorderLayout.SOUTH);
+        buttonPanel.add(refreshButton);
+
+        JButton logOutButton = new JButton("Logga ut");
+        logOutButton.setFont(new Font("Times New Roman", Font.BOLD, 12));
+        logOutButton.setPreferredSize(new Dimension(80, 25));
+        logOutButton.setBackground(Color.WHITE);
+        logOutButton.setFocusable(false);
+        logOutButton.addActionListener(e ->{
+            parentFrame.showCard("Login");
+            logOut();
+        });
+        buttonPanel.add(logOutButton);
+
+
+
+
+
 
         parentPanel.add(bookingsWrapper, gbc);
 
@@ -149,6 +171,8 @@ public class BookingPanel extends JPanel {
         timePanel.revalidate();
         timePanel.repaint();
         parentPanel.add(timePanel, gbc);
+
+
     }
 
     private void navigateMonth(int direction) {
@@ -253,5 +277,12 @@ public class BookingPanel extends JPanel {
 
         bookingsPanel.revalidate();
         bookingsPanel.repaint();
+    }
+
+    private void logOut(){
+        this.customer = null;
+
+
+
     }
 }

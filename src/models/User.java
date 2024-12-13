@@ -1,5 +1,9 @@
 package models;
 
+import data.Encryption;
+
+import javax.print.attribute.standard.MediaSize;
+
 public abstract class User {
     private String name;
     private String email;
@@ -30,7 +34,7 @@ public abstract class User {
     }
 
     public String getPassword() {
-        return password;
+        return Encryption.decrypt(password);
     }
 
     public void setName(String name) {

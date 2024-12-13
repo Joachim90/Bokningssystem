@@ -1,5 +1,6 @@
 package gui;
 
+import data.Encryption;
 import data.UserDataManager;
 import models.Customer;
 import models.User;
@@ -114,6 +115,8 @@ public class LoginPanel extends JPanel {
             } else {
                 JOptionPane.showMessageDialog(this, "Felaktiga inloggningsuppgifter.", "Felmeddelande", JOptionPane.ERROR_MESSAGE);
             }
+            idField.setText("");
+            passwordField.setText("");
         });
 
         // Action listener för backButton

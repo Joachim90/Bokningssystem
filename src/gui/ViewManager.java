@@ -59,7 +59,7 @@ public class ViewManager extends JFrame {
         if (isAdmin) {
             showAdminPanel();
         } else {
-            BookingPanel bookingPanel = new BookingPanel(user.getEmail(), AppointmentManager.getInstance(DatabaseManager.getInstance()), (Customer) user);
+            BookingPanel bookingPanel = new BookingPanel(this, user.getEmail(), AppointmentManager.getInstance(DatabaseManager.getInstance()), (Customer) user);
             mainPanel.add(bookingPanel, "Booking");
             showCard("Booking");
         }

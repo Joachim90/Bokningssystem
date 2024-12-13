@@ -1,5 +1,6 @@
 package gui;
 
+import data.Encryption;
 import data.UserDataManager;
 import models.Customer;
 import models.User;
@@ -133,7 +134,7 @@ public class RegistrationPanel extends JPanel {
             return;
         }
             // Sparar till fil
-            User newUser = new Customer(id, firstName + " " + lastName, email, phonenumber, password);
+            User newUser = new Customer(id, firstName + " " + lastName, email, phonenumber, Encryption.encrypt(password));
             boolean success = UserDataManager.getInstance().registerUser(newUser, "Customer");
             if (success) {
                 JOptionPane.showMessageDialog(this, "Registrering lyckades!");
